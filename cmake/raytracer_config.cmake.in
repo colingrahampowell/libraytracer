@@ -1,0 +1,6 @@
+get_filename_component(RAYTRACER_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+
+if(NOT TARGET raytracer::raytracer)
+    include("${RAYTRACER_CMAKE_DIR}/raytracer_targets.cmake")
+endif()
+
