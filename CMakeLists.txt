@@ -12,7 +12,7 @@ list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
 file(GLOB_RECURSE HEADERS "include/*.h")
 
 set(SOURCES 
-    src/helloworld.cpp)
+    src/tuple.cpp)
 
 add_library(raytracer
     ${SOURCES}
