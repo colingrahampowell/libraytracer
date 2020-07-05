@@ -14,7 +14,7 @@ file(GLOB_RECURSE HEADERS "include/*.h")
 set(SOURCES 
     src/tuple.cpp)
 
-add_library(raytracer
+add_library(raytracer STATIC
     ${SOURCES}
     ${HEADERS}
 ) 
