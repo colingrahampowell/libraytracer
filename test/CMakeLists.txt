@@ -37,7 +37,7 @@ if(NOT GTEST_FOUND)
 
 endif()
 
-add_executable(raytracer_test src/tuple_test.cpp)
+add_executable(raytracer_test src/vec4_test.cpp)
 target_compile_features(raytracer_test PRIVATE cxx_auto_type)
 target_link_libraries(raytracer_test gtest_main raytracer::raytracer)
 
