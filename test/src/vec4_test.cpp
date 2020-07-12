@@ -46,3 +46,39 @@ TEST(Vec4Test, DivideScalar) {
   const auto a = raytracer::vec4d(1, -2, 3, -4);
   EXPECT_EQ(a / 2, raytracer::vec4d(0.5, -1, 1.5, -2));
 }
+
+// SCENARIO: Magnitude of vector (1,0,0,0)
+TEST(Vec4Test, MagnitudeX) {
+  const auto v = raytracer::vec4d(1, 0, 0, 0);
+  EXPECT_TRUE(raytracer::about_equal(v.magnitude(), 1.0));
+}
+
+// SCENARIO: Magnitude of vector (0,1,0,0)
+TEST(Vec4Test, MagnitudeY) {
+  const auto v = raytracer::vec4d(0, 1, 0, 0);
+  EXPECT_TRUE(raytracer::about_equal(v.magnitude(), 1.0));
+}
+
+// SCENARIO: Magnitude of vector (0,0,1,0)
+TEST(Vec4Test, MagnitudeZ) {
+  const auto v = raytracer::vec4d(0, 0, 1, 0);
+  EXPECT_TRUE(raytracer::about_equal(v.magnitude(), 1.0));
+}
+
+// SCENARIO: Magnitude of vector (0,0,0,1)
+TEST(Vec4Test, MagnitudeW) {
+  const auto v = raytracer::vec4d(0, 0, 0, 1);
+  EXPECT_TRUE(raytracer::about_equal(v.magnitude(), 1.0));
+}
+
+// SCENARIO: Magnitude of vector (1,2,3,4)
+TEST(Vec4Test, MagnitudePositive) {
+  const auto v = raytracer::vec4d(1, 2, 3, 4);
+  EXPECT_TRUE(raytracer::about_equal(v.magnitude(), std::sqrt(30)));
+}
+
+// SCENARIO: Magnitude of vector (-1,-2,-3,-4)
+TEST(Vec4Test, MagnitudeNegative) {
+  const auto v = raytracer::vec4d(-1, -2, -3, 4);
+  EXPECT_TRUE(raytracer::about_equal(v.magnitude(), std::sqrt(30)));
+}

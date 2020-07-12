@@ -48,6 +48,10 @@ class vec4 {
 
   vec4 operator-() const { return *this * -1; }
 
+  T magnitude() const {
+    return std::sqrt(p_x * p_x + p_y * p_y + p_z * p_z + p_w * p_w);
+  }
+
  private:
   T p_x, p_y, p_z, p_w;
 };
