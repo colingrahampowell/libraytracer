@@ -52,6 +52,11 @@ class vec4 {
     return std::sqrt(p_x * p_x + p_y * p_y + p_z * p_z + p_w * p_w);
   }
 
+  vec4 normalize() const {
+    const auto mag = this->magnitude();
+    return vec4(p_x / mag, p_y / mag, p_z / mag, p_w / mag);
+  }
+
  private:
   T p_x, p_y, p_z, p_w;
 };

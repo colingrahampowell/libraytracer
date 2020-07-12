@@ -82,3 +82,28 @@ TEST(Vec4Test, MagnitudeNegative) {
   const auto v = raytracer::vec4d(-1, -2, -3, 4);
   EXPECT_TRUE(raytracer::about_equal(v.magnitude(), std::sqrt(30)));
 }
+
+TEST(Vec4Test, NormalizeX) {
+  const auto v = raytracer::vec4d(4, 0, 0, 0);
+  EXPECT_EQ(v.normalize(), raytracer::vec4d(1, 0, 0, 0));
+}
+
+TEST(Vec4Test, NormalizePositive) {
+  const auto v = raytracer::vec4d(1, 2, 3, 4);
+  EXPECT_EQ(v.normalize(),
+            raytracer::vec4d(1 / std::sqrt(30), 2 / std::sqrt(30),
+                             3 / std::sqrt(30), 4 / std::sqrt(30)));
+}
+
+TEST(Vec4Test, NormalizeNegative) {
+  const auto v = raytracer::vec4d(-1, -2, -3, -4);
+  EXPECT_EQ(v.normalize(),
+            raytracer::vec4d(-1 / std::sqrt(30), -2 / std::sqrt(30),
+                             -3 / std::sqrt(30), -4 / std::sqrt(30)));
+}
+
+TEST(Vec4Test, NormalizeMagnitude) {
+  const auto v = raytracer::vec4d(1, 2, 3, 4);
+  const auto v_norm = v.normalize();
+  EXPECT_TRUE(raytracer::about_equal(v_norm.magnitude(), 1.0));
+}
