@@ -37,7 +37,21 @@ if(NOT GTEST_FOUND)
 
 endif()
 
-add_executable(raytracer_test src/vec4_test.cpp)
-target_compile_features(raytracer_test PRIVATE cxx_auto_type)
-target_link_libraries(raytracer_test gtest_main raytracer::raytracer)
+# from "Modern CMake", https://cliutils.gitlab.io/modern-cmake/chapters/testing/googletest.html
+macro(package_add_test TESTNAME)
+    add_executable(${TESTNAME} ${ARGN})
+
+    target_link_libraries(${TESTNAME} gtest_main raytracer::raytracer)
+	target_compile_features(${TESTNAME} PRIVATE cxx_auto_type)
+    
+	gtest_discover_tests(${TESTNAME}
+        WORKING_DIRECTORY ${PROJECT_DIR}
+        PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${PROJECT_DIR}"
+    )
+    set_target_properties(${TESTNAME} PROPERTIES FOLDER tests)
+endmacro()
+
+
+package_add_test(vec3_test src/vec3_test.cpp)
+package_add_test(vec4_test src/vec4_test.cpp)
 
