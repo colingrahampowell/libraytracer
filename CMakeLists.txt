@@ -9,16 +9,27 @@ list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
 # Create target, set properties
 ########################################
 
-add_library(raytracer INTERFACE) 
+file(GLOB_RECURSE HEADERS "include/*.h")
+
+set(SOURCES 
+    src/color3.cpp) 
+
+add_library(raytracer STATIC
+	    ${SOURCES}
+	    ${HEADERS}
+)
+
 add_library(raytracer::raytracer ALIAS raytracer)
 
 target_include_directories(raytracer
-    INTERFACE
+    PUBLIC 
         $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-target_compile_features(raytracer INTERFACE cxx_auto_type)
+target_compile_features(raytracer PUBLIC cxx_auto_type)
 
 
 # Here we would add link libraries, but currently there are none

@@ -54,4 +54,4 @@ endmacro()
 
 package_add_test(vec3_test src/vec3_test.cpp)
 package_add_test(vec4_test src/vec4_test.cpp)
-
+package_add_test(color3_test src/color3_test.cpp)
