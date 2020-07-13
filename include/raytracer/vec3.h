@@ -56,6 +56,12 @@ class vec3 {
     return p_x * other.p_x + p_y * other.p_y + p_z * other.p_z;
   }
 
+  vec3 cross(const vec3& other) const {
+    return vec3((p_y * other.p_z - p_z * other.p_y),
+                (p_z * other.p_x - p_x * other.p_z),
+                (p_x * other.p_y - p_y * other.p_x));
+  }
+
  private:
   T p_x, p_y, p_z;
 };

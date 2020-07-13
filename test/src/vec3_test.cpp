@@ -106,3 +106,10 @@ TEST(Vec3Test, DotProduct) {
   const auto w = raytracer::vec3d(2, 3, 4);
   EXPECT_TRUE(raytracer::about_equal(v.dot(w), 20.0));
 }
+
+TEST(Vec3Test, CrossProduct) {
+  const auto v = raytracer::vec3d(1, 2, 3);
+  const auto w = raytracer::vec3d(2, 3, 4);
+  EXPECT_EQ(v.cross(w), raytracer::vec3d(-1, 2, -1));
+  EXPECT_EQ(w.cross(v), raytracer::vec3d(1, -2, 1));
+}
