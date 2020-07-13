@@ -57,6 +57,11 @@ class vec4 {
     return vec4(p_x / mag, p_y / mag, p_z / mag, p_w / mag);
   }
 
+  T dot(const vec4& other) const {
+    return p_x * other.p_x + p_y * other.p_y + p_z * other.p_z +
+           p_w * other.p_w;
+  }
+
  private:
   T p_x, p_y, p_z, p_w;
 };

@@ -107,3 +107,9 @@ TEST(Vec4Test, NormalizeMagnitude) {
   const auto v_norm = v.normalize();
   EXPECT_TRUE(raytracer::about_equal(v_norm.magnitude(), 1.0));
 }
+
+TEST(Vec4Test, DotProduct) {
+  const auto v = raytracer::vec4d(1, 2, 3, 4);
+  const auto w = raytracer::vec4d(2, 3, 4, 5);
+  EXPECT_TRUE(raytracer::about_equal(v.dot(w), 40.0));
+}
