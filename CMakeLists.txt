@@ -4,6 +4,8 @@
 cmake_minimum_required(VERSION 3.18.0)
 project(libraytracer VERSION 0.0.1 LANGUAGES CXX)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
 
 # Create target, set properties
@@ -29,7 +31,7 @@ target_include_directories(raytracer
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-target_compile_features(raytracer PUBLIC cxx_auto_type)
+target_compile_features(raytracer PUBLIC cxx_std_17)
 
 
 # Here we would add link libraries, but currently there are none
