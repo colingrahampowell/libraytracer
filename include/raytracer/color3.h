@@ -1,5 +1,5 @@
-#ifndef COLOR_H
-#define COLOR_H
+#ifndef COLOR3_H
+#define COLOR3_H
 
 #include <raytracer/vec3.h>
 
