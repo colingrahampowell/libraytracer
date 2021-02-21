@@ -1,16 +1,16 @@
 #include <gtest/gtest.h>
-#include <raytracer/array_2d.h>
+#include <raytracer/grid.h>
 
-TEST(Array2DTest, Construct)
+TEST(GridTest, Construct)
 {
-  raytracer::array_2d<uint32_t> arr(4, 5);
+  raytracer::grid<uint32_t> arr(4, 5);
   EXPECT_EQ(arr.width(), 4);
   EXPECT_EQ(arr.height(), 5);
 }
 
-TEST(Array2DTest, ConstructWithFill)
+TEST(GridTest, ConstructWithFill)
 {
-  raytracer::array_2d<uint32_t> arr(4, 5, 42);
+  raytracer::grid<uint32_t> arr(4, 5, 42);
   EXPECT_EQ(arr.width(), 4);
   EXPECT_EQ(arr.height(), 5);
 
@@ -24,17 +24,17 @@ TEST(Array2DTest, ConstructWithFill)
   }
 }
 
-TEST(Array2DTest, GetAndSetValue)
+TEST(GridTest, GetAndSetValue)
 {
-  raytracer::array_2d<uint32_t> arr(3,4,15);
+  raytracer::grid<uint32_t> arr(3,4,15);
   EXPECT_NE(arr(1,2), 42);
   arr(1,2) = 42;
   EXPECT_EQ(arr(1,2), 42);
 }
 
-TEST(Array2DTest, GetAndSetOutOfBounds)
+TEST(GridTest, GetAndSetOutOfBounds)
 {
-  raytracer::array_2d<uint32_t> arr(1,3);
+  raytracer::grid<uint32_t> arr(1,3);
   const auto try_out_of_bounds = [&arr](uint32_t x, uint32_t y)
   {
     try 

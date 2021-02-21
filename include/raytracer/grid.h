@@ -1,5 +1,5 @@
-#ifndef ARRAY_2D_H
-#define ARRAY_2D_H
+#ifndef GRID_H
+#define GRID_H
 
 #include <cstdint>
 #include <stdexcept>
@@ -27,17 +27,17 @@ private:
 };
 
 template <typename T, template<class> class... Mixins>
-class array_2d : public Mixins<array_2d<T>>...
+class grid : public Mixins<grid<T>>...
 {
 public:
   template <typename = std::enable_if_t<std::is_default_constructible<T>::value>>
-  array_2d(uint32_t width, uint32_t height)
+  grid(uint32_t width, uint32_t height)
   : p_array(width * height, T()),
     p_width(width)
   {
   }
 
-  array_2d(uint32_t width, uint32_t height, T fill)
+  grid(uint32_t width, uint32_t height, T fill)
   : p_array(width * height, fill),
     p_width(width)
   {
