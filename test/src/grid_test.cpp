@@ -32,6 +32,22 @@ TEST(GridTest, GetAndSetValue)
   EXPECT_EQ(arr(1,2), 42);
 }
 
+TEST(GridTest, CopyAssign)
+{
+  const auto arr = raytracer::grid<uint32_t,3,1>({4,5,6});
+  EXPECT_EQ(arr(0,0), 4);
+  EXPECT_EQ(arr(1,0), 5);
+  EXPECT_EQ(arr(2,0), 6);
+}
+
+TEST(GridTest, ConstructWithArray)
+{
+  raytracer::grid<uint32_t,3,1> arr({4,5,6});
+  EXPECT_EQ(arr(0,0), 4);
+  EXPECT_EQ(arr(1,0), 5);
+  EXPECT_EQ(arr(2,0), 6);
+}
+
 TEST(GridTest, GetAndSetOutOfBounds)
 {
   raytracer::grid<uint32_t, 1, 3> arr;

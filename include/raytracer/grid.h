@@ -44,6 +44,17 @@ public:
     p_array.fill(fill_value);
   }
 
+  grid(std::array<T, Width * Height>&&  list)
+  : p_array(list)
+  {
+  }
+
+  grid& operator=(const grid& other)
+  {
+    p_array = other.p_array;
+    return *this;
+  }
+
   T operator()(uint32_t x, uint32_t y) const
   {
     bounds_check_(x, y);
