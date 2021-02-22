@@ -1,7 +1,9 @@
 #ifndef GRID_H
 #define GRID_H
 
+#include <array>
 #include <cstdint>
+#include <initializer_list>
 #include <stdexcept>
 #include <type_traits>
 #include <vector>
@@ -26,21 +28,20 @@ private:
   uint32_t p_stride;
 };
 
-template <typename T, template<class> class... Mixins>
-class grid : public Mixins<grid<T>>...
+template <typename T, 
+          uint32_t Width, 
+          uint32_t Height, 
+          template<class> class... Mixins>
+class grid : public Mixins<grid<T, Width, Height>>...
 {
 public:
-  template <typename = std::enable_if_t<std::is_default_constructible<T>::value>>
-  grid(uint32_t width, uint32_t height)
-  : p_array(width * height, T()),
-    p_width(width)
+  grid()
   {
   }
 
-  grid(uint32_t width, uint32_t height, T fill)
-  : p_array(width * height, fill),
-    p_width(width)
+  grid(T fill_value)
   {
+    p_array.fill(fill_value);
   }
 
   T operator()(uint32_t x, uint32_t y) const
@@ -69,14 +70,14 @@ public:
     return range<T>(colnum, end, width());
   }
 
-  uint32_t width() const 
+  constexpr uint32_t width() const 
   { 
-    return p_width; 
+    return Width; 
   }
 
-  uint32_t height() const 
+  constexpr uint32_t height() const 
   { 
-    return p_array.size() / p_width;
+    return p_array.size() / Width;
   }
 
 private:
@@ -88,8 +89,7 @@ private:
     }
   }
 
-  std::vector<T> p_array;
-  uint32_t p_width;
+  std::array<T, Width * Height> p_array;
 };
 }
 

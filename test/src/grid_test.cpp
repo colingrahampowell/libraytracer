@@ -3,14 +3,14 @@
 
 TEST(GridTest, Construct)
 {
-  raytracer::grid<uint32_t> arr(4, 5);
+  raytracer::grid<uint32_t, 4, 5> arr;
   EXPECT_EQ(arr.width(), 4);
   EXPECT_EQ(arr.height(), 5);
 }
 
 TEST(GridTest, ConstructWithFill)
 {
-  raytracer::grid<uint32_t> arr(4, 5, 42);
+  raytracer::grid<uint32_t, 4, 5> arr(42);
   EXPECT_EQ(arr.width(), 4);
   EXPECT_EQ(arr.height(), 5);
 
@@ -26,7 +26,7 @@ TEST(GridTest, ConstructWithFill)
 
 TEST(GridTest, GetAndSetValue)
 {
-  raytracer::grid<uint32_t> arr(3,4,15);
+  raytracer::grid<uint32_t, 3, 4> arr(15);
   EXPECT_NE(arr(1,2), 42);
   arr(1,2) = 42;
   EXPECT_EQ(arr(1,2), 42);
@@ -34,7 +34,7 @@ TEST(GridTest, GetAndSetValue)
 
 TEST(GridTest, GetAndSetOutOfBounds)
 {
-  raytracer::grid<uint32_t> arr(1,3);
+  raytracer::grid<uint32_t, 1, 3> arr;
   const auto try_out_of_bounds = [&arr](uint32_t x, uint32_t y)
   {
     try 
