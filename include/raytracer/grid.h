@@ -11,21 +11,83 @@
 namespace raytracer
 {
 template <typename T>
-class range
+class grid_iter
 {
 public:
-  range(T* start, T* end, uint32_t stride = sizeof(ptrdiff_t))
-  : p_start(start),
+  grid_iter(T* start, T* end, uint32_t stride_elems = 1)
+  : p_pos(start),
     p_end(end),
-    p_stride(stride)
+    p_stride(stride_elems)
   {
   }
 
-  // TODO: implement begin() and end()
+  struct iterator
+  {
+    using iterator_category = std::bidirectional_iterator_tag;
+    using difference_type = std::ptrdiff_t;
+    using value_type = T;
+    using pointer = value_type*;
+    using reference = value_type&;
+
+    iterator(pointer pos_, uint32_t stride_)
+    : pos(pos_),
+      stride(stride_)
+    {
+    }
+
+    reference operator*() const
+    {
+      return *pos;
+    }
+
+    pointer operator->() 
+    {
+      return pos;
+    }
+
+    // prefix operator
+    iterator& operator++()
+    {
+      pos += stride;
+      return *this;
+    }
+    
+    // postfix operator
+    iterator& operator++(int)
+    {
+      iterator tmp = *this;
+      ++(*this);
+      return tmp;
+    }
+
+    friend bool operator==(const iterator& a, const iterator& b)
+    {
+      return a.pos == b.pos;
+    }
+
+    friend bool operator!=(const iterator& a, const iterator& b)
+    {
+      return a.pos != b.pos;
+    }
+
+    pointer pos; 
+    const uint32_t stride;
+  };
+
+  iterator begin() 
+  {
+    return iterator(p_pos, p_stride);
+  }
+
+  iterator end()
+  {
+    return iterator(p_end, p_stride);
+  }
+
 private:
-  T* p_start;
+  T* p_pos;
   T* p_end;
-  uint32_t p_stride;
+  const uint32_t p_stride;
 };
 
 template <typename T, 
@@ -44,7 +106,7 @@ public:
     p_array.fill(fill_value);
   }
 
-  grid(std::array<T, Width * Height>&&  list)
+  grid(std::array<T, Width * Height>&& list)
   : p_array(list)
   {
   }
@@ -67,18 +129,22 @@ public:
     return p_array.at(x + y * width());
   }
 
-  range<T> row(uint32_t rownum) const
+  grid_iter<T> row(uint32_t rownum)
   {
     bounds_check_(0, rownum);
-    const auto start = rownum * width();
-    return range<T>(start, start + width());
+    const auto start_idx = rownum * width();
+    const auto end_idx = start_idx + width();
+    // second argument is past-the-end, intentionally avoiding bounds check
+    return grid_iter<T>(&p_array.at(start_idx), &p_array[end_idx]);
   }
 
-  range<T> column(uint32_t colnum) const
+  grid_iter<T> column(uint32_t colnum)
   {
     bounds_check_(colnum, 0);
-    const auto end = colnum + width() * height(); // past-the-end
-    return range<T>(colnum, end, width());
+    const auto start_idx = colnum;
+    const auto end_idx = colnum + width() * height(); 
+    // second argument is past-the-end, intentionally avoiding bounds check
+    return grid_iter<T>(&p_array.at(start_idx), &p_array[end_idx], width());
   }
 
   constexpr uint32_t width() const 

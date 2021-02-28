@@ -79,3 +79,63 @@ TEST(GridTest, GetAndSetOutOfBounds)
   try_out_of_bounds(0, 3);
 }
 
+TEST(GridTest, RowIterator)
+{
+  raytracer::grid<uint32_t, 2, 4> arr;
+  constexpr auto new_val = 42;
+  EXPECT_NE(arr(0, 1), new_val);
+  EXPECT_NE(arr(1, 1), new_val);
+
+  auto my_row = arr.row(1);
+  uint32_t i = 0;
+  for(auto& elem : my_row)
+  {
+    elem = new_val;
+  }
+
+  EXPECT_EQ(arr(0, 1), new_val);
+  EXPECT_EQ(arr(1, 1), new_val);
+}
+
+// Iterating last row will set end() as
+// a value beyond the end of the grid -
+// ensure that past-the-end operator works
+// in this case
+TEST(GridTest, RowIteratorLastRow)
+{
+  raytracer::grid<uint32_t, 2, 2> arr;
+  constexpr auto new_val = 42;
+  EXPECT_NE(arr(0, 1), new_val);
+  EXPECT_NE(arr(1, 1), new_val);
+
+  auto my_row = arr.row(1);
+  uint32_t i = 0;
+  for(auto& elem : my_row)
+  {
+    elem = new_val;
+  }
+
+  EXPECT_EQ(arr(0, 1), new_val);
+  EXPECT_EQ(arr(1, 1), new_val);
+}
+
+TEST(GridTest, ColIterator)
+{
+  raytracer::grid<uint32_t, 2, 4> arr;
+  constexpr auto new_val = 42;
+  EXPECT_NE(arr(0, 1), new_val);
+  EXPECT_NE(arr(1, 1), new_val);
+  EXPECT_NE(arr(1, 2), new_val);
+  EXPECT_NE(arr(1, 3), new_val);
+
+  auto my_col = arr.column(1);
+  for(auto& elem : my_col)
+  {
+    elem = new_val;
+  }
+
+  EXPECT_EQ(arr(1, 0), new_val);
+  EXPECT_EQ(arr(1, 1), new_val);
+  EXPECT_EQ(arr(1, 2), new_val);
+  EXPECT_EQ(arr(1, 3), new_val);
+}
